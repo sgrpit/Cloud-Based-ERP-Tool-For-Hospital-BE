@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\InPatientDirectory.cs" />
+    <Compile Remove="Domain\OutPatientDirectory.cs" />
+    <Compile Remove="Domain\PatientAppointment.cs" />
+    <Compile Remove="Domain\Patients.cs" />
+    <Compile Remove="Domain\Staffs.cs" />
+    <Compile Remove="Domain\UserRole.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
@@ -21,10 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Middleware\" />
     <Folder Include="Utilites\" />
-    <Folder Include="Repo\Interface\" />
     <Folder Include="Services\Interface\" />
   </ItemGroup>
 

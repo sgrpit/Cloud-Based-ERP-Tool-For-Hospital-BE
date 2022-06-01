@@ -1,7 +1,12 @@
+using AutoMapper;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.MappingProfile;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +33,16 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE
         {
 
             services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+
+            services.AddTransient<IDepartmentRepo, DepartmentRepo>();
+
+            IMapper mapper = MappingConfiguration.RegisterMaps().CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cloud_Based_ERP_Tool_For_Hospital_BE", Version = "v1" });
