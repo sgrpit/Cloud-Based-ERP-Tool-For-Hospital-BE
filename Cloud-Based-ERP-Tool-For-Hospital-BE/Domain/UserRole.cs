@@ -10,9 +10,9 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Domain
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
-
-        public ICollection<Staffs> Staffs { get; set; }
+        //public virtual ICollection<Staffs> Staffs { get; set; }
     }
 }

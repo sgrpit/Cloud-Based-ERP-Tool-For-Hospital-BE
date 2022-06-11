@@ -1,5 +1,6 @@
 ﻿using Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Utilites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,15 +23,23 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
         [HttpGet]        
         public async Task<IActionResult> GetDepartmentDetails()
         {
-            IEnumerable<DepartmentResDto> departmentRes = await _departmentRepo.GetAllDepartments();
-            return Ok(departmentRes);
+            var departmentRes = await _departmentRepo.GetAllDepartments();
+            return Ok(new ApiResponse<IEnumerable<DepartmentResDto>>(departmentRes));
+            //return Ok(departmentRes);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddUpdateDepartment(DepartmentReqDto addDepartmentReqDto)
         {
             DepartmentResDto deptDetailsResDto = await _departmentRepo.UpsertDepartment(addDepartmentReqDto);
-            return Ok(deptDetailsResDto);
+            return Ok(new ApiResponse<DepartmentResDto>(deptDetailsResDto));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteDepartment(int deptId)
+        {
+            var result = await _departmentRepo.DeleteDepartment(deptId);
+            return Ok(new ApiResponse<bool>(result));
         }
     }
 }

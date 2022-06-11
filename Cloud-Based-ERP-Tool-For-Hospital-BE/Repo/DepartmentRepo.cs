@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Domain;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Middleware;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,13 +20,25 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public Task<DepartmentResDto> DeleteDepartment(int depatId)
+        public async Task<bool> DeleteDepartment(int depatId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Department dept = await _dbContext.Departments.FirstOrDefaultAsync(d => d.Id == depatId);
+                _dbContext.Departments.Remove(dept);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
         }
 
         public async Task<IEnumerable<DepartmentResDto>> GetAllDepartments()
         {
+            
             IList<Department> departments = await _dbContext.Departments.ToListAsync();
             return _mapper.Map<IList<DepartmentResDto>>(departments);
         }
@@ -48,6 +61,8 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             await _dbContext.SaveChangesAsync();
             return _mapper.Map<DepartmentResDto>(department);
         }
+
+
 
         
     }

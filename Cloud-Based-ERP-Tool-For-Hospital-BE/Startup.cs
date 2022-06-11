@@ -1,7 +1,10 @@
 using AutoMapper;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.MappingProfile;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Middleware;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Services;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Services.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Cloud_Based_ERP_Tool_For_Hospital_BE
@@ -33,14 +37,33 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE
         {
 
             services.AddControllers();
+            //.AddJsonOptions(x =>
+            //    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve
+            //);
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+
+            services.AddScoped<IStaffService, StaffService>();
+            services.AddScoped<IPatientSerivce, PatientService>();
+            services.AddScoped<ILoginService, LoginService>();
 
             services.AddTransient<IDepartmentRepo, DepartmentRepo>();
+            services.AddTransient<IStaffRepo, StaffRepo>();            
+            services.AddTransient<IPatientRepo, PatientRepo>();
+            services.AddTransient<IAdminRepo, AdminRepo>();
+            services.AddTransient<ILoginRepo, LoginRepo>();
 
             IMapper mapper = MappingConfiguration.RegisterMaps().CreateMapper();
             services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPloicy", policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                });
+            });
 
 
             services.AddSwaggerGen(c =>
@@ -62,9 +85,9 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("CorsPloicy");
             app.UseAuthorization();
-
+            app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
