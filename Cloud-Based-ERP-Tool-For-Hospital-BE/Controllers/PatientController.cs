@@ -23,6 +23,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
             _patientService = patientSerivce;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllPatientDetails()
+        {
+            var res = await _patientRepo.GetAllPatient();
+            return Ok(new ApiResponse<IEnumerable<PatientResDto>>(res));
+        }
+
         [HttpGet("MobileNo/{mobileNo}")]
         public async Task<IActionResult> GetPatientDetails(string mobileNo)
         {
@@ -56,6 +63,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
         {
             var response = await _patientRepo.UpdatePatientDetails(patientReqDto);
             return Ok(new ApiResponse<PatientResDto>(response));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePatientDetails(int id)
+        {
+            var response = await _patientRepo.DeletePatientDetails(id);
+            return Ok(new ApiResponse<bool>(response));
         }
 
         [HttpGet("GetAppointmentByDoctor/id/{id}")]

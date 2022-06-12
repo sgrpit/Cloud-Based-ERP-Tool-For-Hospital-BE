@@ -34,12 +34,47 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
                 staff.ModifiedOn = DateTime.Now;
                 _dbContext.Staffs.Add(staff);
                 await _dbContext.SaveChangesAsync();
-                return _mapper.Map<StaffDetailsResDto>(staff);
+                var newStaff = await _dbContext.Staffs.OrderBy(s => s.Id).LastOrDefaultAsync();
+                string userName = CreateUserName(staff.FirstName + "." + staff.LastName);
+                var loginDetails = new LoginDetails
+                {
+                    UserName = userName.Trim(),
+                    UserPassword = userName + "@" + staff.MobileNo.Substring(1, 3),
+                    StaffId = newStaff.Id
+                    
+                };
+                _dbContext.LoginDetails.Add(loginDetails);
+                await _dbContext.SaveChangesAsync();
+
+                return _mapper.Map<StaffDetailsResDto>(newStaff);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        private bool CheckIfUserNameAlreadyExists(string userName)
+        {
+            var alreadyExist = _dbContext.LoginDetails.FirstOrDefault(l => l.UserName == userName);
+            if (alreadyExist != null)
+                return true;
+            else
+                return false;
+        }
+
+        private string CreateUserName(string userName)
+        {
+            int i = 0;
+            bool alreadyExist = CheckIfUserNameAlreadyExists(userName);
+            if (alreadyExist)
+            {
+                i++;
+                 CreateUserName(userName + Convert.ToString(i));
+            }
+            else
+                return userName;
+            return string.Empty;
         }
 
         public async Task<bool> DeleteStaffDetails(int id)
@@ -48,6 +83,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             {
                 var staffDetailsToDelete = await _dbContext.Staffs.FirstOrDefaultAsync(d => d.Id == id);
                 _dbContext.Staffs.Remove(staffDetailsToDelete);
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)

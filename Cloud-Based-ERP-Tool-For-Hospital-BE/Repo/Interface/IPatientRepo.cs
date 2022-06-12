@@ -14,7 +14,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface
         Task<PatientResDto> GetPatientDetailsContactNo(string contactNo);
         Task<PatientResDto> PatientRegistration(PatientReqDto patientReqDto);
         Task<PatientResDto> UpdatePatientDetails(PatientReqDto patientReqDto);
-        Task<bool> DeletePatientDetails(string patientUHID);
+        Task<bool> DeletePatientDetails(int id);
         Task<string> GetLatestPatientUHID();
         Task<Patients> GetPatientDetailsByFilter(string UHID, string contactNo, string emailId = "");
         Task<PatientAppointment> SchedulePatientAppointment(PatientAppoinmentReqDto appointmentDetails);

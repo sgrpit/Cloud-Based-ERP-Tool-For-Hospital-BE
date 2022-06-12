@@ -38,7 +38,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public string MiddleName { get; set; }
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
-        //public int RoleId { get; set; }
+        public int UserRoleId { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
@@ -60,7 +60,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public string MiddleName { get; set; }
         public string MobileNo { get; set; }
         public string EmailId { get; set; }
-        //public int RoleId { get; set; }
+        public int UserRoleId { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }

@@ -31,6 +31,12 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE
                 .IsRequired(true)
                 .OnDelete(DeleteBehavior.ClientNoAction);
 
+            modelBuilder.Entity<Staffs>(entity =>
+            {
+                entity.HasIndex(c => c.MobileNo).IsUnique();
+                entity.HasIndex(c => c.EmailId).IsUnique();
+            });
+
             modelBuilder.Entity<Patients>(entity =>
             {
                 entity.HasIndex(c => c.PatientUHID).IsUnique();

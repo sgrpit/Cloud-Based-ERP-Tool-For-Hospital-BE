@@ -40,9 +40,9 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeletePatientDetails(string patientUHID)
+        public async Task<bool> DeletePatientDetails(int id)
         {
-            var patient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.PatientUHID == patientUHID);
+            var patient = await _dbContext.Patients.FirstOrDefaultAsync(p => p.Id == id);
             _dbContext.Patients.Remove(patient);
             await _dbContext.SaveChangesAsync();
             return true;

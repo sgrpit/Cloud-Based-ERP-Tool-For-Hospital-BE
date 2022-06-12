@@ -74,6 +74,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
 
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStaffDetails(int id)
+        {
+            var result = await _staffService.DeleteStaff(id);
+            return Ok(new ApiResponse<bool>(result));
+        }
+
     }
 
 
