@@ -28,6 +28,14 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
             //return Ok(departmentRes);
         }
 
+        [HttpGet("GetNonAdminDepartmentDetails")]
+        public async Task<IActionResult> GetNonAdminDepartmentDetails()
+        {
+            var departmentRes = await _departmentRepo.GetNonAdminDepartments();
+            return Ok(new ApiResponse<IEnumerable<DepartmentResDto>>(departmentRes));
+            //return Ok(departmentRes);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddUpdateDepartment(DepartmentReqDto addDepartmentReqDto)
         {

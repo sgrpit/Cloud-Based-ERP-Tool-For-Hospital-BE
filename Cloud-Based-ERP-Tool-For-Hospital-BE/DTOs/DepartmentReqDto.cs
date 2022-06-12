@@ -10,6 +10,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public int Id { get; set; }
         public string DepartmentName { get; set; }
         public string DepartmentDesc { get; set; }
+        public bool IsAdminDepartment { get; set; }
     }
 
     public class DepartmentResDto
@@ -17,5 +18,6 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public int Id { get; set; }
         public string DepartmentName { get; set; }
         public string DepartmentDesc { get; set; }
+        public bool IsAdminDepartment { get; set; }
     }
 }

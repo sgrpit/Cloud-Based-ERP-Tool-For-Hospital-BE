@@ -19,7 +19,9 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.MappingProfile
                 config.CreateMap<Staffs, CreateStaffReqDto>().ReverseMap();
                 config.CreateMap<StaffDetailsResDto, Staffs>().ReverseMap();
                 config.CreateMap<Staffs, UpdateStaffReqDto>().ReverseMap();
-                config.CreateMap<PatientAppointment, PatientAppoinmentReqDto>().ReverseMap();
+                config.CreateMap<PatientAppointment, PatientAppoinmentReqDto>()
+                    //.ForMember(dest => dest.Id, s=> s.MapFrom(src=> src.PatientId))
+                .ReverseMap();
                 config.CreateMap<PatientAppoinmentResDto, PatientAppointment>().ReverseMap();
                 config.CreateMap<UserRoleResDto, UserRole>().ReverseMap();
                 config.CreateMap<Patients, PatientReqDto>().ReverseMap();
@@ -33,6 +35,8 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.MappingProfile
 
                 config.CreateMap<InPatientDirectory, PatientAdmissionReqDto>().ReverseMap();
                 config.CreateMap<InPatientDirectory, PatientAdmissionResDto>().ReverseMap();
+                config.CreateMap<IPDPatientTreatmentBreakup, InPatientTreatmentBreakUpDto>().ReverseMap();
+                //config.CreateMap<IEnumerable<IPDPatientTreatmentBreakup>, IEnumerable<InPatientTreatmentBreakUpDto>>().ReverseMap();
 
             });
 

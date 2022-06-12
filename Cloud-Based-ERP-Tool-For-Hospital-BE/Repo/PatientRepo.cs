@@ -173,5 +173,22 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             var ipdDetails = await _dbContext.InPatientDirectory.Where(p => !p.IsDischarged).ToListAsync();
             return _mapper.Map<IEnumerable<PatientAdmissionResDto>>(ipdDetails);
         }
+        public async Task<PatientAdmissionResDto> GetIPDPatientDetailsByHID(string patientUHID)
+        {
+            var ipdDetails = await _dbContext.InPatientDirectory.FirstOrDefaultAsync(p => p.PatientUHID == patientUHID && !p.IsDischarged);
+            return _mapper.Map<PatientAdmissionResDto>(ipdDetails);
+        }
+
+        public async Task<IEnumerable<PatientAppoinmentResDto>> GetPatientAppointmentsBypatientId(int patientId)
+        {
+            var patientAppointment = await _dbContext.PatientAppointments.Where(p => p.PatientId == patientId).ToListAsync();
+            return _mapper.Map<IEnumerable<PatientAppoinmentResDto>>(patientAppointment);
+        }
+
+        public async Task<IEnumerable<PatientAdmissionResDto>> GetHospitalizationDetailsByPatientId(int patientId)
+        {
+            var patientAdmissionDetails = await _dbContext.InPatientDirectory.Where(p => p.PatientId == patientId).ToListAsync();
+            return _mapper.Map<IEnumerable<PatientAdmissionResDto>>(patientAdmissionDetails);
+        }
     }
 }

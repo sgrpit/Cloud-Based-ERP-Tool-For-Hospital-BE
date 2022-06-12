@@ -15,6 +15,8 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Domain
         public string DepartmentName { get; set; }
         [Required]
         public string DepartmentDesc { get; set; }
+        public bool IsAdminDepartment { get; set; } = false;
         public virtual ICollection<Staffs> Staffs { get; set; }
+
     }
 }

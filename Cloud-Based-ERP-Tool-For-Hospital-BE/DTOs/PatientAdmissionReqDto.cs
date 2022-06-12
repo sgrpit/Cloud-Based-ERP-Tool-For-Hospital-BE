@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cloud_Based_ERP_Tool_For_Hospital_BE.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,10 +32,12 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public string IsInsured { get; set; }
         public string InsuranceCompany { get; set; }
         public string AdminssionDate { get; set; }
+        public bool IsDischarged { get; set; }
         public string DischargeDate { get; set; }
         public string DignosisDetails { get; set; }
         public string DischargeSummary { get; set; }
         public PatientResDto Patient { get; set; }
         public StaffDetailsResDto Staff { get; set; }
+        public ICollection<InPatientTreatmentBreakUpDto> IPDPatientTreatmentSummaries { get; set; }
     }
 }

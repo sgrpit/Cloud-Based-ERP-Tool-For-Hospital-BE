@@ -34,8 +34,16 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Services
 
         public async Task<PatientAppoinmentResDto> SchedulePatientAppoinemtn(PatientAppoinmentReqDto appoinmentReqDto)
         {
-            var appoinemt = await _patientRepo.SchedulePatientAppointment(appoinmentReqDto);            
-            return  _mapper.Map<PatientAppoinmentResDto>(appoinemt);
+            try
+            {
+                var appoinemt = await _patientRepo.SchedulePatientAppointment(appoinmentReqDto);
+                return _mapper.Map<PatientAppoinmentResDto>(appoinemt);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
 
         public async Task<PatientAppoinmentResDto> UpdateScheduledPatientAppointment(string contactNo, string nextAppointmentDate, string appointmentSlot)

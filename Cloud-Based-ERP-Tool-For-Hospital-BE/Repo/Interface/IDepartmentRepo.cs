@@ -9,6 +9,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface
     public interface IDepartmentRepo
     {
         Task<IEnumerable<DepartmentResDto>> GetAllDepartments();
+        Task<IEnumerable<DepartmentResDto>> GetNonAdminDepartments();
         Task<DepartmentResDto> UpsertDepartment(DepartmentReqDto departmentReq);
         Task<bool> DeleteDepartment(int depatId);
     }

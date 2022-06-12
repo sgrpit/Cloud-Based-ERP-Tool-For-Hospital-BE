@@ -5,6 +5,7 @@ using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Services;
 using Cloud_Based_ERP_Tool_For_Hospital_BE.Services.Interface;
+using Cloud_Based_ERP_Tool_For_Hospital_BE.Utilites;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,6 +43,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE
             //);
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddScoped<IStaffService, StaffService>();
             services.AddScoped<IPatientSerivce, PatientService>();

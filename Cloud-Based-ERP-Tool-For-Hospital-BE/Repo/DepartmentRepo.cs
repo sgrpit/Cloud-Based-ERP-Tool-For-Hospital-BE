@@ -43,6 +43,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             return _mapper.Map<IList<DepartmentResDto>>(departments);
         }
 
+        public async Task<IEnumerable<DepartmentResDto>> GetNonAdminDepartments()
+        {
+
+            IList<Department> departments = await _dbContext.Departments.Where(d => !d.IsAdminDepartment).ToListAsync();
+            return _mapper.Map<IList<DepartmentResDto>>(departments);
+        }
+
         public async Task<DepartmentResDto> UpsertDepartment(DepartmentReqDto departmentReq)
         {
             var department = await _dbContext.Departments.FirstOrDefaultAsync(d => d.Id == departmentReq.Id);
@@ -55,6 +62,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             {
                 department.DepartmentName = departmentReq.DepartmentName;
                 department.DepartmentDesc = departmentReq.DepartmentDesc;
+                department.IsAdminDepartment = departmentReq.IsAdminDepartment;
                 _dbContext.Update(department);
             }            
             

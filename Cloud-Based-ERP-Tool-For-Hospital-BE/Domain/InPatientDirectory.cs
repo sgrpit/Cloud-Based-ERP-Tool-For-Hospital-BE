@@ -35,5 +35,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Domain
         public virtual Patients Patient { get; set; }
         public virtual Staffs Staff { get; set; }
 
+        public virtual ICollection<IPDPatientTreatmentBreakup> IPDPatientTreatmentSummaries { get; set; }
+
     }
 }

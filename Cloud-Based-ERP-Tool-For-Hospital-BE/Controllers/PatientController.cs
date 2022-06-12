@@ -64,6 +64,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
             var appointments = await _patientRepo.GetPatientAppointmentsByStaffId(id);
             return Ok(new ApiResponse<IEnumerable<PatientAppoinmentResDto>>(appointments, true, "Success"));
         }
+        [HttpGet("GetAppointmentByPatientId/{patientId}")]
+        public async Task<IActionResult> GetAppointmentByPatientId(int patientId)
+        {
+            var appointments = await _patientRepo.GetPatientAppointmentsBypatientId(patientId);
+            return Ok(new ApiResponse<IEnumerable<PatientAppoinmentResDto>>(appointments, true, "Success"));
+        }
+
 
         [HttpPost("AddPrescription")]
         public async Task<IActionResult> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientPresciptionReqDto)
@@ -91,6 +98,20 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
         public async Task<IActionResult> GetIPDPatientDetails()
         {
             var response = await _patientRepo.GetIPDPatientDetails();
+            return Ok(new ApiResponse<IEnumerable<PatientAdmissionResDto>>(response));
+        }
+
+        [HttpGet("GetIPDPatientDetailsByPatientUHID/{patientUHID}")]
+        public async Task<IActionResult> GetIPDPatientDetails(string patientUHID)
+        {
+            var response = await _patientRepo.GetIPDPatientDetailsByHID(patientUHID);
+            return Ok(new ApiResponse<PatientAdmissionResDto>(response));
+        }
+
+        [HttpGet("GetHospitalizationByPatientId/{patientId}")]
+        public async Task<IActionResult> GetIPDPatientDetailsByPatientID(int patientId)
+        {
+            var response = await _patientRepo.GetHospitalizationDetailsByPatientId(patientId);
             return Ok(new ApiResponse<IEnumerable<PatientAdmissionResDto>>(response));
         }
 

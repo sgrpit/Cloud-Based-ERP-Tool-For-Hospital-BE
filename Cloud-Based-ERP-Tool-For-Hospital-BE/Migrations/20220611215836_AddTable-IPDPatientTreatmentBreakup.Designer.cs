@@ -4,14 +4,16 @@ using Cloud_Based_ERP_Tool_For_Hospital_BE;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220611215836_AddTable-IPDPatientTreatmentBreakup")]
+    partial class AddTableIPDPatientTreatmentBreakup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +36,6 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAdminDepartment")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
@@ -52,7 +51,10 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InPatientDirectoryId")
+                    b.Property<int>("InPateintDirectoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InPatientDirectoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -446,9 +448,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Migrations
                 {
                     b.HasOne("Cloud_Based_ERP_Tool_For_Hospital_BE.Domain.InPatientDirectory", "InPatientDirectory")
                         .WithMany("IPDPatientTreatmentSummaries")
-                        .HasForeignKey("InPatientDirectoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InPatientDirectoryId");
 
                     b.Navigation("InPatientDirectory");
                 });

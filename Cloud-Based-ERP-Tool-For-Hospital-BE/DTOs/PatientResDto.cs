@@ -61,7 +61,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
 
     public class PatientAppoinmentReqDto
     {
-        public string PatientId { get; set; }
+        public int PatientId { get; set; }
         public string PatientName { get; set; }
         public string MobileNo { get; set; }
         public string EmailID { get; set; }
