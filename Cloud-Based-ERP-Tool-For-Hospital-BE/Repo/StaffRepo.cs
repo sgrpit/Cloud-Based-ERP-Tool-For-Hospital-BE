@@ -50,7 +50,18 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             }
             catch (Exception ex)
             {
-                throw ex;
+                if (ex.InnerException.Message.Contains("MobileNo"))
+                {
+                    throw new Exception("Mobile No already exists");
+                }
+                else if (ex.InnerException.Message.Contains("EmailId"))
+                {
+                    throw new Exception("Email Id already exists");
+                }
+                else
+                {
+                    throw new Exception(ex.InnerException.Message);
+                }
             }
         }
 

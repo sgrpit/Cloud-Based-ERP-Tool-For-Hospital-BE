@@ -23,7 +23,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface
         Task<PatientAppointment> UpdateScheduledPatientAppointment(string contactNo, string nextAppointmentDate, string appointmentSlot);
         Task<IEnumerable<PatientAppoinmentResDto>> GetPatientAppointmentsByStaffId(int staffId);
         Task<IEnumerable<PatientPrescriptionResDto>> GetPrescriptionByPatientId(int patientId);
-        Task<PatientPrescriptionResDto> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientAppoinmentReqDto);
+        Task<IEnumerable<PatientPrescriptionResDto>> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientAppoinmentReqDto);
         Task<PatientAdmissionResDto> PatientAdmission(PatientAdmissionReqDto patientAdmissionReq);
         Task<IEnumerable<PatientAdmissionResDto>> GetIPDPatientDetails();
         //Task<IEnumerable<PatientAdmissionResDto>> GetIPDPatientDetailsByStaffId(int staffId);

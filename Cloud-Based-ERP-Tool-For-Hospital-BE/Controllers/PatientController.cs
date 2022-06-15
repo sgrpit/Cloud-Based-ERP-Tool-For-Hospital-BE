@@ -90,7 +90,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
         public async Task<IActionResult> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientPresciptionReqDto)
         {
             var response = await _patientRepo.AddPatientPrescription(patientPresciptionReqDto);
-            return Ok(new ApiResponse<PatientPrescriptionResDto>(response));
+            return Ok(new ApiResponse<IEnumerable<PatientPrescriptionResDto>>(response));
             //return Ok();
         }
 

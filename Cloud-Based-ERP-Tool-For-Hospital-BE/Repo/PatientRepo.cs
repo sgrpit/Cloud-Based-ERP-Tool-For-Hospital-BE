@@ -21,17 +21,21 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
             _dbContext = dbContext;
         }
 
-        public async Task<PatientPrescriptionResDto> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientPresciptionReqs)
+        public async Task<IEnumerable<PatientPrescriptionResDto>> AddPatientPrescription(IEnumerable<PatientPresciptionReqDto> patientPresciptionReqs)
         {
             var patientPrescription = _mapper.Map<IEnumerable<PatientPrescriptionHistory>>(patientPresciptionReqs);
-            _dbContext.PatientPrescriptionHistories.AddRange(patientPrescription);
-            await _dbContext.SaveChangesAsync();
-            //int appintmentId = patientPresciptionReqs.FirstOrDefault().PatientAppointmentId;
-            //var patientAppointment = await _dbContext.PatientAppointments.FirstOrDefaultAsync(p => p.Id == patientPrescription.FirstOrDefault().PatientAppointmentId);
-            //patientAppointment.IsCompleted = true;
-            //_dbContext.PatientAppointments.Update(patientAppointment);
+            
+            //_dbContext.PatientPrescriptionHistories.AddRange(patientPrescription);
             //await _dbContext.SaveChangesAsync();
-            return _mapper.Map<PatientPrescriptionResDto>(patientPrescription);
+            //int appintmentId = patientPresciptionReqs.FirstOrDefault().PatientAppointmentId;
+            var patientAppointment = await _dbContext.PatientAppointments.FirstOrDefaultAsync(p => p.Id == patientPrescription.FirstOrDefault().PatientAppointmentId);
+            patientAppointment.PatientPrescriptionHistories =  patientPrescription.ToList();
+            patientAppointment.IsCompleted = true;
+            //var patientappointment = await _dbContext.PatientAppointments.FirstOrDefaultAsync(p => p.id == patientprescription.firstordefault().patientappointmentid);
+            //patientappointment.iscompleted = true;
+            _dbContext.PatientAppointments.Update(patientAppointment);
+            await _dbContext.SaveChangesAsync();
+            return _mapper.Map<IEnumerable<PatientPrescriptionResDto>>(patientPrescription);
             //throw new NotImplementedException();
         }
 

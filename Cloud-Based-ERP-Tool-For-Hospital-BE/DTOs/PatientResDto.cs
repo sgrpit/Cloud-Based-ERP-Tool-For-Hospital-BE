@@ -100,7 +100,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public bool IsAfternoon { get; set; }
         public bool IsEvening { get; set; }
         public int StaffId { get; set; }
-        public DateTime PrescribedOn { get; set; } = new DateTime();
+        public DateTime PrescribedOn { get; set; }
         public PatientAppoinmentResDto PatientAppointment { get; set; }
     }
 }
