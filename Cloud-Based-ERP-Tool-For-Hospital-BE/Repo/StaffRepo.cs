@@ -123,7 +123,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
         {
             if(deparmanentId != 0)
             {
-                var staff = await _dbContext.Staffs.Where(s => s.DepartmentsId == deparmanentId).ToListAsync();
+                var staff = await _dbContext.Staffs.Where(s => s.DepartmentsId == deparmanentId && s.UserRoleId == 2).ToListAsync();
                 return _mapper.Map<IEnumerable<StaffDetailsResDto>>(staff);
             }
             throw new NotImplementedException();

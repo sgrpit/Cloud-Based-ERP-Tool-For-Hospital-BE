@@ -20,6 +20,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Domain
         public string MobileNo { get; set; }
         [Required]
         public string EmailID { get; set; }
+        public string Password { get; set; }
         public string BloodGroup { get; set; }
         
         public string Gender { get; set; }

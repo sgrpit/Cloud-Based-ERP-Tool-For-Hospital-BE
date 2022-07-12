@@ -65,7 +65,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
 
         public async Task<IEnumerable<PatientAppoinmentResDto>> GetPatientAppointmentsByStaffId(int staffId)
         {
-            var patientAppointment = await _dbContext.PatientAppointments.Where(p => p.StaffId == staffId && p.IsCompleted == false).ToListAsync();
+            var patientAppointment = await _dbContext.PatientAppointments.Where(p => p.StaffId == staffId && p.IsCompleted == false && p.AppointmentDate.Date == DateTime.Now.Date).ToListAsync();
             return _mapper.Map<IEnumerable<PatientAppoinmentResDto>>(patientAppointment);
             //throw new NotImplementedException();
         }
@@ -93,10 +93,28 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
 
         public async Task<PatientResDto> PatientRegistration(PatientReqDto patientReqDto)
         {
-            Patients patientsDetails = _mapper.Map<Patients>(patientReqDto);
-            _dbContext.Patients.Add(patientsDetails);
-            await _dbContext.SaveChangesAsync();
-            return _mapper.Map<PatientResDto>(patientsDetails);
+            try
+            {
+                Patients patientsDetails = _mapper.Map<Patients>(patientReqDto);
+                _dbContext.Patients.Add(patientsDetails);
+                await _dbContext.SaveChangesAsync();
+                return _mapper.Map<PatientResDto>(patientsDetails);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message.Contains("MobileNo"))
+                {
+                    throw new Exception("Mobile No already exists");
+                }
+                else if (ex.InnerException.Message.Contains("EmailID"))
+                {
+                    throw new Exception("Email Id already exists");
+                }
+                else
+                {
+                    throw new Exception(ex.InnerException.Message);
+                }
+            }
         }
 
         public async Task<PatientAppointment> SchedulePatientAppointment(PatientAppoinmentReqDto appointmentReqDto)
@@ -193,6 +211,12 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
         {
             var patientAdmissionDetails = await _dbContext.InPatientDirectory.Where(p => p.PatientId == patientId).ToListAsync();
             return _mapper.Map<IEnumerable<PatientAdmissionResDto>>(patientAdmissionDetails);
+        }
+
+        public async Task<IEnumerable<PatientAppoinmentResDto>> GetOPDHistorysByStaffId(int staffId, DateTime fromDate, DateTime toDate)
+        {
+            var patientAppointment = await _dbContext.PatientAppointments.Where(p => p.StaffId == staffId && p.AppointmentDate.Date >= fromDate.Date && p.AppointmentDate.Date <= toDate.Date).ToListAsync();
+            return _mapper.Map<IEnumerable<PatientAppoinmentResDto>>(patientAppointment);
         }
     }
 }

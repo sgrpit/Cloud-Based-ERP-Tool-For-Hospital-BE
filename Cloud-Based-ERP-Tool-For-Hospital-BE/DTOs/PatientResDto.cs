@@ -33,6 +33,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.DTOs
         public string LastName { get; set; }
         public string MobileNo { get; set; }
         public string EmailID { get; set; }
+        public string Password { get; set; }
         public string BloodGroup { get; set; }
         public string Gender { get; set; }
         [DataType(DataType.Date)]

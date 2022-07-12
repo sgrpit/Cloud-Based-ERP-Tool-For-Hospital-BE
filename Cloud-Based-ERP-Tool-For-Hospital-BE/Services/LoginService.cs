@@ -33,7 +33,8 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Services
             }
             else
             {
-                throw new Exception("No User Found", new KeyNotFoundException());
+                return null;
+                //throw new Exception("No User Found", new KeyNotFoundException());
             }
             
         }

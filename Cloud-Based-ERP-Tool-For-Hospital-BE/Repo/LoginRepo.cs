@@ -28,7 +28,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo
 
         public async Task<Patients> ValidatePatient(string userName, string userPassword)
         {
-            var validatedUser = await _dbContext.Patients.FirstOrDefaultAsync(p => p.MobileNo == userName);
+            var validatedUser = await _dbContext.Patients.FirstOrDefaultAsync(p => p.MobileNo == userName && p.Password == userPassword);
             return validatedUser;
         }
     }

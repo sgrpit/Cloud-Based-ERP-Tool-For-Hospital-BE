@@ -25,7 +25,11 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
         public async Task<IActionResult> ValidateUser(string userName, string password)
         {
             var staff = await _loginService.ValidateUser(userName, password);
-            return Ok(new ApiResponse<StaffDetailsResDto>(staff));
+            //return Ok(new ApiResponse<StaffDetailsResDto>(staff));
+            if (staff != null)
+                return Ok(new ApiResponse<StaffDetailsResDto>(staff));
+            else
+                return Ok(new ApiResponse<PatientResDto>(null, false, "Invalid username or password"));
         }
         [HttpGet("ValidatePatient/{userName}/{password}")]
         public async Task<IActionResult> ValidatePatient(string userName, string password)

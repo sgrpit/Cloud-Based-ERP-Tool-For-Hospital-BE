@@ -78,6 +78,13 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Controllers
             var appointments = await _patientRepo.GetPatientAppointmentsByStaffId(id);
             return Ok(new ApiResponse<IEnumerable<PatientAppoinmentResDto>>(appointments, true, "Success"));
         }
+
+        [HttpGet("GetOPDHistoryByDoctor/id/{id}/{fromDate}/{toDate}")]
+        public async Task<IActionResult> GetOPDHisotryByDoctor(int id, DateTime fromDate, DateTime toDate)
+        {
+            var appointments = await _patientRepo.GetOPDHistorysByStaffId(id, fromDate, toDate);
+            return Ok(new ApiResponse<IEnumerable<PatientAppoinmentResDto>>(appointments, true, "Success"));
+        }
         [HttpGet("GetAppointmentByPatientId/{patientId}")]
         public async Task<IActionResult> GetAppointmentByPatientId(int patientId)
         {

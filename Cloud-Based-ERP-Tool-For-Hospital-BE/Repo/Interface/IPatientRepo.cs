@@ -30,5 +30,7 @@ namespace Cloud_Based_ERP_Tool_For_Hospital_BE.Repo.Interface
         Task<PatientAdmissionResDto> GetIPDPatientDetailsByHID(string patientUHID);
         Task<IEnumerable<PatientAppoinmentResDto>> GetPatientAppointmentsBypatientId(int patientId);
         Task<IEnumerable<PatientAdmissionResDto>> GetHospitalizationDetailsByPatientId(int patientId);
+        Task<IEnumerable<PatientAppoinmentResDto>> GetOPDHistorysByStaffId(int staffId, DateTime fromDate, DateTime toDate);
+
     }
 }
